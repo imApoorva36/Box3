@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import { verifyPackage } from "@/lib/api";
 
 interface WebcamCaptureModalProps {
   isOpen: boolean;
@@ -10,7 +11,6 @@ interface WebcamCaptureModalProps {
 
 const PINATA_API_KEY = process.env.NEXT_PUBLIC_PINATA_API_KEY
 const PINATA_API_SECRET = process.env.NEXT_PUBLIC_PINATA_API_SECRET
-const API_ENDPOINT = "http://192.168.167.131:8000/api/verify_package/";
 
 const WebcamCaptureModal: React.FC<WebcamCaptureModalProps> = ({
   isOpen,
@@ -72,15 +72,15 @@ const WebcamCaptureModal: React.FC<WebcamCaptureModalProps> = ({
       const ipfsUrl = `https://gateway.pinata.cloud/ipfs/${pinataResponse.data.IpfsHash}`;
       alert(`Image uploaded to IPFS: ${ipfsUrl}`);
 
-      // Send to your API
-      const response = await axios.post(API_ENDPOINT, {
+      // Send to your API using the utility function
+      const response = await verifyPackage({
         product_description: description,
         image_url: ipfsUrl,
       });
 
       alert("Image and description submitted successfully!");
       setUploading(false);
-      if (response.data.isValidPackage)
+      if (response.isValidPackage)
         alert("The package is valid");
       else
         alert("The package is not valid");

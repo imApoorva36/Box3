@@ -21,6 +21,7 @@ import {
 import { useAppContext } from '@/components/AppContext'
 import { useRouter } from 'next/navigation'
 import { useAccount } from 'wagmi'
+import { getTag, actuateServo, createTag } from '@/lib/api'
 
 // Mock data
 const mockPackages = [
@@ -59,9 +60,23 @@ export default function CustomerDashboard() {
       router.push(`/paywall?packageId=${pkg.id}`);
   };
 
-  const handleOpenBox = (pkg: Package) => {
-      console.log("Opening box...", pkg.id);
-      // Call box opening API
+  const handleOpenBox = async (pkg: Package) => {
+    try {
+      console.log("Reading RFID tag...", pkg.id);
+      
+      // First, try to read the RFID tag
+      const tagData = await getTag();
+      console.log("RFID tag data:", tagData);
+      
+      // If RFID reading is successful, actuate the servo to open the box
+      const servoResponse = await actuateServo();
+      console.log("Servo response:", servoResponse);
+      
+      alert("Box opened successfully!");
+    } catch (error) {
+      console.error("Error opening box:", error);
+      alert("Failed to open box. Please try again.");
+    }
   };
 
   if (!isConnected) {
