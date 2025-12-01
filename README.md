@@ -1,187 +1,114 @@
-# **Box3**
+# **Box3** - The Future of Decentralized Logistics
 
-**Box3** is a cutting-edge solution combining IoT, RFID technology, blockchain-powered smart contracts, and modern web/mobile applications to create a secure, decentralized package authentication system.
+**Box3** is a cutting-edge secure delivery ecosystem that solves the "last-mile trust" problem by combining **IoT (RFID)**, **Blockchain (Base)**, and **Cryptographic Payments (x402)**.
 
----
+We ensure that a package is not just "delivered" but **verified and unlocked** only when payment is secured on-chain.
 
-## **Overview**
-
-**Box3** leverages RFID technology and blockchain to ensure package authenticity and traceability. By integrating IoT devices like Raspberry Pi, RFID cards/readers, and platforms like Sui for decentralized smart contracts, **Box3** provides an innovative approach to secure package management. The project also includes user-friendly web and mobile interfaces for seamless interactions.
+![Box3 Logo](flutter_app/assets/box3-logo.png)
 
 ---
 
-## **System Architecture**
+## **🚀 The Problem**
 
-![WhatsApp Image 2024-12-02 at 06 55 03_67043e85](https://github.com/user-attachments/assets/07511f60-c2f1-480a-81ac-85d037859c5b)
+In traditional logistics, "Cash on Delivery" is risky, and digital payments often lack synchronization with the physical handover. Porch piracy and disputed deliveries cost billions annually.
 
+## **💡 The Solution: "Pay to Open"**
+
+Box3 introduces a hardware-software bridge:
+
+1.  **Smart Packaging**: Boxes are sealed with IoT/RFID locks.
+2.  **On-Chain Tracking**: Every scan (Created, Shipped, Delivered) is recorded on the blockchain.
+3.  **x402 Payment Gate**: The buyer pays a micro-transaction (USDC) via the app.
+4.  **Instant Unlock**: The x402 protocol verifies payment and triggers the IoT lock to open.
+
+---
+
+## **🏗️ System Architecture**
+
+![Architecture Diagram](https://github.com/user-attachments/assets/07511f60-c2f1-480a-81ac-85d037859c5b)
 
 ### **Core Components**
 
-1. **RFID Technology:**
+1.  **Frontend & Payments (Next.js + x402)**
 
-   - Taps RFID cards to capture and store package information.
-   - Enables secure data writing and reading.
+    - **"Pay to Open"**: Uses the HTTP 402 standard to gate physical access behind crypto payments.
+    - **Wallets**: Integrated with **Coinbase Wallet** (OnchainKit) and **MetaMask**.
+    - **Network**: Deployed on **Base Sepolia** for fast, cheap USDC transactions.
 
-2. **Raspberry Pi & Django Backend:**
+2.  **IoT & Hardware (Raspberry Pi + RFID)**
 
-   - Acts as the central hub for data processing and verification.
-   - Communicates with RFID readers and external verification systems.
+    - **RFID Authentication**: Taps RFID cards to capture package identity.
+    - **Smart Lock**: Controlled by the Raspberry Pi, unlocking only upon blockchain verification.
 
-3. **Blockchain (Sui):**
+3.  **Decentralized Logic (Base)**
 
-   - Stores verification data immutably.
-   - Executes decentralized smart contracts for package authentication.
+    - **Base**: Handles both the smart contract logic for package state and the financial settlement layer (USDC payments).
 
-4. **Web App (Next.js):**
-
-   - Facilitates RFID and package verification.
-   - Allows package image capture for demo purposes.
-
-5. **Mobile App (Flutter):**
-
-   - Provides a secure interface for users to interact with the system.
-   - Supports execution of blockchain functions via the Node.js bridge.
-
-6. **External Verification (Galadriel):**
-   - Validates package authenticity through external checks.
+4.  **Mobile Experience (Flutter)**
+    - A secure mobile interface for couriers and users to interact with the system on the go.
 
 ---
 
-## **Features**
+## **✨ Key Features**
 
-- **Secure RFID Authentication:** Tamper-proof verification using RFID technology.
-- **Decentralized Storage:** Immutability ensured through blockchain (Sui).
-- **Cross-Platform Accessibility:** Web (Next.js) and mobile (Flutter) applications.
-- **IoT Integration:** Seamless connection between hardware and software components.
-- **Smart Contract Automation:** Decentralized logic for package tracking and validation.
-
----
-
-## **Technologies Used**
-
-| **Component**  | **Technology**     |
-| -------------- | ------------------ |
-| **Web3 Wallet**| Okto               |
-| **IoT**        | RFID, Raspberry Pi |
-| **Backend**    | Django             |
-| **Web App**    | Next.js            |
-| **Mobile App** | Flutter            |
-| **Blockchain** | Crosschain across Base + Sui|
-| **Middleware** | Node.js            |
+- **🔐 x402 Payment Gate**: Native HTTP 402 integration for seamless "Pay-to-Unlock" flows.
+- **📦 Smart Logistics**: Real-time tracking from "Created" to "Opened" using RFID scans.
+- **💰 Dynamic Pricing**: Boxes have dynamic values ($0.01 - $0.08) handled via smart middleware.
+- **🔄 Dual-Role Dashboard**: Switch between "Buyer" and "Seller" modes instantly for easy demos.
 
 ---
 
-## **Installation**
+## **🛠️ Tech Stack**
 
-### **1. Prerequisites**
-
-- **Hardware:** Raspberry Pi with an RFID receiver.
-- **Software:**
-  - Python, Node.js, npm
-  - Flutter SDK
-  - Sui account setup
-
-### **2. Clone the Repository**
-
-```bash
-git clone https://github.com/imApoorva36/Box3.git
-cd Box3
-```
-
-### **3. Backend Setup (Django)**
-
-1. Navigate to the backend folder:
-   ```bash
-   cd backend
-   ```
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Start the Django server:
-   ```bash
-   python manage.py runserver
-   ```
-
-### **4. Web App Setup (Next.js)**
-
-1. Navigate to the web folder:
-   ```bash
-   cd web
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Run the development server:
-   ```bash
-   npm run dev
-   ```
-
-### **5. Mobile App Setup (Flutter)**
-
-1. Open the Flutter project in your preferred IDE.
-2. Run the app:
-   ```bash
-   flutter run
-   ```
-
-### **6. Node.js Bridge**
-
-1. Navigate to the bridge folder:
-   ```bash
-   cd node-bridge
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the Node.js bridge:
-   ```bash
-   node app.js
-   ```
+| Component        | Technology                             |
+| :--------------- | :------------------------------------- |
+| **Web App**      | Next.js 16, Tailwind CSS, Shadcn UI    |
+| **Payments**     | **x402 Protocol**, USDC (Base Sepolia) |
+| **Wallets**      | **Coinbase Wallet** (OnchainKit), Okto |
+| **IoT Hardware** | Raspberry Pi, RFID RC522               |
+| **Backend**      | Django (Python), Node.js Middleware    |
+| **Blockchain**   | **Base** (Payments & Data)             |
+| **Mobile App**   | Flutter                                |
 
 ---
 
-## **Usage**
+## **🏁 Getting Started**
 
-1. **Tap RFID Cards:**
+### **Option A: Run the Web Demo (x402 Payments)**
 
-   - Use the RFID receiver to scan package information.
+Experience the "Pay to Open" flow immediately without hardware.
 
-2. **Authenticate via Web/Mobile App:**
+1.  **Navigate to the frontend:**
+    ```bash
+    cd frontend-x402
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Configure Environment:**
+    Create `.env.local` with your OnchainKit API Key and Wallet Address.
+4.  **Run the App:**
+    ```bash
+    npm run dev
+    ```
+    Open [http://localhost:3000/dashboard](http://localhost:3000/dashboard).
 
-   - Access the web app or mobile app to verify package data in real-time.
+### **Option B: Full Hardware Setup**
 
-3. **Blockchain Execution:**
-   - Track verification status and execute smart contracts securely through the mobile app.
+1.  **Backend (Django)**:
+    ```bash
+    cd backend
+    pip install -r requirements.txt
+    python manage.py runserver
+    ```
+2.  **Hardware**: Connect your RFID receiver to the Raspberry Pi and run the python bridge script.
+3.  **Mobile**:
+    ```bash
+    cd flutter_app
+    flutter run
+    ```
 
 ---
 
-## **Contributing**
-
-Contributions are welcome! Follow these steps to contribute:
-
-1. Fork the repository:
-   ```bash
-   git fork https://github.com/imApoorva36/Box3.git
-   ```
-2. Create a feature branch:
-   ```bash
-   git checkout -b feature-name
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Add your message here"
-   ```
-4. Push to your branch:
-   ```bash
-   git push origin feature-name
-   ```
-5. Open a pull request.
-
----
-
-## **License**
-
-This project is licensed under the [MIT License](LICENSE).
+_Built for the Future of Logistics._
