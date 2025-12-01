@@ -54,7 +54,6 @@ Box3 introduces a hardware-software bridge:
 - **🔐 x402 Payment Gate**: Native HTTP 402 integration for seamless "Pay-to-Unlock" flows.
 - **📦 Smart Logistics**: Real-time tracking from "Created" to "Opened" using RFID scans.
 - **💰 Dynamic Pricing**: Boxes have dynamic values ($0.01 - $0.08) handled via smart middleware.
-- **🔄 Dual-Role Dashboard**: Switch between "Buyer" and "Seller" modes instantly for easy demos.
 
 ---
 
