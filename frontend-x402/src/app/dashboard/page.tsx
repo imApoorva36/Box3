@@ -87,11 +87,14 @@ export default function Dashboard() {
   };
 
   // Real x402 Payment
-  const handlePayToOpen = async (boxId: number) => {
+  const handlePayToOpen = async (boxId: number, valueStr: string) => {
     if (!walletClient || !address || !connector || !chainId) {
       setPaymentError("Wallet not connected properly");
       return;
     }
+
+    // Remove '$' from value string (e.g., "$0.05" -> "0.05")
+    const amount = valueStr.replace('$', '');
 
     setIsPaymentProcessing(boxId);
     setPaymentError(null);
@@ -100,7 +103,8 @@ export default function Dashboard() {
     try {
       const fetchWithPayment = wrapFetchWithPayment(fetch, walletClient);
       
-      const response = await fetchWithPayment("/api/unlock-box");
+      // Pass the amount to the API
+      const response = await fetchWithPayment(`/api/unlock-box?amount=${amount}`);
       
       const paymentTxHash = response.headers.get('x-payment-transaction');
       if (paymentTxHash) {
@@ -332,7 +336,7 @@ export default function Dashboard() {
                         </div>
                       )}
                       <Button 
-                        onClick={() => handlePayToOpen(box.id)}
+                        onClick={() => handlePayToOpen(box.id, box.value)}
                         disabled={isPaymentProcessing === box.id}
                         className="w-full bg-red-600 hover:bg-red-700 disabled:opacity-50"
                       >
@@ -343,7 +347,7 @@ export default function Dashboard() {
                           </>
                         ) : (
                           <>
-                            <Lock className="mr-2 h-4 w-4" /> Pay $0.01 USDC to Open
+                            <Lock className="mr-2 h-4 w-4" /> Pay {box.value} USDC to Open
                           </>
                         )}
                       </Button>
