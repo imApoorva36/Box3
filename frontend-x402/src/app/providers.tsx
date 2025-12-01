@@ -4,7 +4,7 @@ import { OnchainKitProvider } from '@coinbase/onchainkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { baseSepolia } from 'wagmi/chains';
 import { http, createConfig, WagmiProvider } from 'wagmi';
-import { coinbaseWallet } from 'wagmi/connectors';
+import { coinbaseWallet, metaMask } from 'wagmi/connectors';
 import { ReactNode, useState } from 'react';
 
 const config = createConfig({
@@ -13,6 +13,7 @@ const config = createConfig({
     coinbaseWallet({
       appName: 'Box3 x402',
     }),
+    metaMask(),
   ],
   transports: {
     [baseSepolia.id]: http(),

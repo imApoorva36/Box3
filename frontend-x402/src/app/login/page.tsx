@@ -1,25 +1,14 @@
 'use client';
 
-import { 
-  Wallet, 
-  ConnectWallet, 
-  WalletDropdown, 
-  WalletDropdownDisconnect 
-} from '@coinbase/onchainkit/wallet';
-import { 
-  Identity, 
-  Avatar, 
-  Name, 
-  Address, 
-  EthBalance 
-} from '@coinbase/onchainkit/identity';
-import { useAccount } from 'wagmi';
+import { useAccount, useConnect } from 'wagmi';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 export default function LoginPage() {
   const { isConnected } = useAccount();
+  const { connectors, connect } = useConnect();
   const router = useRouter();
 
   useEffect(() => {
@@ -33,24 +22,19 @@ export default function LoginPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">Welcome to Box3</CardTitle>
-          <CardDescription>Connect your Coinbase Wallet to continue</CardDescription>
+          <CardDescription>Connect your wallet to continue</CardDescription>
         </CardHeader>
-        <CardContent className="flex justify-center pb-8">
-           <Wallet>
-            <ConnectWallet>
-              <Avatar className="h-6 w-6" />
-              <Name />
-            </ConnectWallet>
-            <WalletDropdown>
-              <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
-                <Avatar />
-                <Name />
-                <Address />
-                <EthBalance />
-              </Identity>
-              <WalletDropdownDisconnect />
-            </WalletDropdown>
-          </Wallet>
+        <CardContent className="flex flex-col gap-3 pb-8">
+          {connectors.map((connector) => (
+            <Button
+              key={connector.id}
+              onClick={() => connect({ connector })}
+              variant="outline"
+              className="w-full"
+            >
+              Connect with {connector.name}
+            </Button>
+          ))}
         </CardContent>
       </Card>
     </div>
